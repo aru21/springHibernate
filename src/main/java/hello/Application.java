@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-/*@ComponentScan(basePackageClasses = {hello.GreetingController.class} )*/
-@ComponentScan(basePackages = {"hello.GreetingController","hello.PersonDao","hello.Application"} )
+@ComponentScan({"hello.PersonDao"})
+@ComponentScan(basePackageClasses = {hello.GreetingController.class} )
 public class Application {
 
     public static void main(String[] args) {

@@ -13,15 +13,13 @@ public class GreetingController {
 	PersonDao personDao;
 	
     @RequestMapping("/greeting")
-    public String greeting(@RequestParam(value="name", required=false, defaultValue="ACE") String name, Model model) {
-        System.out.println("inside greeting controller");
-    	Person person = new Person();
-    	person.setAge(24);
-    	person.setName("Arpit");
-    
+    public String greeting(@RequestParam(value="name", required=false, defaultValue="ACE") String name, Model model) 
+    {
+    	Person person = new Person("Arpit" , 24);
     	personDao.addPerson(person);
-    	
-        return "greeting";
+    	model.addAttribute("name", person.name);
+    	personDao.getData();
+    	return "greeting";
     }
 
 }

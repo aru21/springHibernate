@@ -1,28 +1,39 @@
 package hello;
+import java.util.ArrayList;
+import java.util.List;
 
-
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Query;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonDao {
+public class PersonDao 
+{
+	 @PersistenceContext
+	  private EntityManager entityManger;
 
-@Autowired	
-private SessionFactory sessionFactory;
+	 @Transactional
+	 public void addPerson(Person p)
+	 {
+		entityManger.persist(p);
+	 }
 	
-	public void setSessionFactory(SessionFactory sf){
-		this.sessionFactory = sf;
-	}
-	@Transactional
-	public void addPerson(Person p) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(p);
-		System.out.println("DAO");
-		
-	}
-	
+	 @SuppressWarnings("unchecked")
+	public List<Person> getData()
+	 {
+		 List<Person> list = new ArrayList<Person>();
+		 String hql = "SELECT u FROM Person u";
+		 list = (List<Person>) entityManger.createQuery(hql).getResultList(); 
+		 System.out.println(list);  
+		 
+		 for (Person person : list) {
+			System.out.println(person);
+		}
+		 return list;
+	 }
+	 
+	 
 }
